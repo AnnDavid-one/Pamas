@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useAuthStore } from '../store/authStore'; 
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000',
+  // baseURL: 'http://localhost:5000',
+baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000',
   withCredentials: true, // CRITICAL: This allows cookies to be sent with requests
   headers: {
     'Content-Type': 'application/json',
