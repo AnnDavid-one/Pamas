@@ -12,7 +12,7 @@ export default function SignupPage() {
         <h2 className="text-3xl font-bold text-white mb-6">Sign In to Pamas Ai</h2>
 
         {/* Redirect to backend Google OAuth */}
-        <Link href="http://localhost:5000/auth/google">
+        <Link href={process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google'}>
           <Button
             className="w-full bg-primary text-xl hover:bg-primary/80 text-white font-bold py-5 px-4 rounded-xl mt-4"
           >
