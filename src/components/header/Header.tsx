@@ -55,11 +55,17 @@ export default function Header({ onMenuClick }: HeaderProps) {
       {/* Right navigation utilities group */}
       <div className="flex items-center gap-4">
         {/* Hide Premium & About on small mobile layouts to save horizontal whitespace */}
-        <Button
+      <Button
+  variant="outline"
+  className="flex md:hidden rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
+>
+          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" /> Pro
+        </Button>
+         <Button
           variant="outline"
-          className="hidden sm:flex rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
+          className="hidden md:flex rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
         >
-          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" /> Go Premium
+          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" />Go Premium 
         </Button>
         
         <Link href="/about" passHref className="hidden sm:inline-block">

@@ -32,7 +32,16 @@ const ModelDropdown = () => {
       {/* Button to toggle dropdown */}
       <button
         onClick={toggleDropdown}
-        className="flex items-center text-slate-300 hover:bg-white/5 hover:text-white rounded-xl font-medium py-2 px-4 transition-colors duration-200"
+        className="flex md:hidden items-center text-slate-300 hover:bg-white/5 hover:text-white rounded-xl font-medium py-2 px-4 transition-colors duration-200"
+      >
+        <span className="font-semibold">Mode</span>
+        <ChevronDown
+          className={`ml-1 h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+      <button
+        onClick={toggleDropdown}
+        className="hidden md:flex items-center text-slate-300 hover:bg-white/5 hover:text-white rounded-xl font-medium py-2 px-4 transition-colors duration-200"
       >
         <span className="font-semibold">Select Model</span>
         <ChevronDown

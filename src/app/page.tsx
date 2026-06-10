@@ -12,7 +12,7 @@ export default function Home() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-<div className="min-h-screen bg-[#111827] text-white flex flex-col">
+<div className="min-h-screen bg-[#111827] text-white flex flex-col max-w-screen">
   <div className="flex flex-1 relative items-stretch bg-[#111827]">
     
     <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
