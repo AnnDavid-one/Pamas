@@ -2,7 +2,7 @@
 
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Sparkles, Search, Star, StarIcon, Stars, StarHalf } from "lucide-react";
+import { Sparkles, Star, Menu } from "lucide-react"; // Added Menu icon
 import ModelDropdown from "./ModelDropdown";
 import { useSummarizerStore } from "@/store/useSummarizerStore";
 import Image from "next/image";
@@ -13,55 +13,56 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/useUserStore";
 import { useAuthStore } from "@/store/authStore";
 
-export default function Header() {
-  const { mode } = useSummarizerStore();
-const pathname = usePathname();
-const {logout}=useUserStore();
-const{logout: authLogout}=useAuthStore();
-const isUserAuthenticated = useUserStore((state) => !!state.user);
-const router = useRouter(); // 2. Initialize the router
-
-
-
-const handleLogout = () => {
-  logout(); // Clear user data from Zustand store
-  authLogout(); // Clear authentication data from Zustand store
-  localStorage.removeItem("token"); // Clear token from localStorage
-  // window.location.href = "/signup"; // Redirect to home or login page
-  // note: this freezes the state use router for better performance
-  router.push("/signup");
-
+interface HeaderProps {
+  onMenuClick?: () => void; // Added type safe optional property for layout integration
 }
 
-useEffect(() => {
-  console.log(isUserAuthenticated)
-},[])
+export default function Header({ onMenuClick }: HeaderProps) {
+  const { mode } = useSummarizerStore();
+  const pathname = usePathname();
+  const { logout, user } = useUserStore(); // Destructured user data to render dynamic avatars
+  const { logout: authLogout } = useAuthStore();
+  const isUserAuthenticated = useUserStore((state) => !!state.user);
+  const router = useRouter(); 
 
+  const handleLogout = () => {
+    logout(); 
+    authLogout(); 
+    localStorage.removeItem("token"); 
+    router.push("/signup");
+  };
 
-// const { user, fetchUserData } = useUserStore();
-
-//   useEffect(() => {
-//     if (!user) {
-//       fetchUserData(); // Fetch user data when the app loads if not already in the store
-//     }
-//   }, [user, fetchUserData]);
-
-  // if (!user) {
-  //   return <div className="min-h-[20vh text-xl">Loading user data...</div>; // Show a loading indicator while fetching user data
-  // }
+  useEffect(() => {
+    console.log("Is Authenticated:", isUserAuthenticated);
+  }, [isUserAuthenticated]);
 
   return (
-    <header  className="flex items-center justify-between px-5 py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90%">
-      <ModelDropdown />
+    <header className="flex items-center justify-between px-5 py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90% border-b border-white/5">
+      
+      {/* Left items control group */}
+      <div className="flex items-center gap-3">
+        {/* Mobile Hamburger Trigger: Visible only on mobile, links to layout state */}
+        <button 
+          onClick={onMenuClick}
+          className="text-slate-300 hover:text-white block md:hidden p-1.5 rounded-xl hover:bg-white/5 transition-colors"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
 
+        <ModelDropdown />
+      </div>
+
+      {/* Right navigation utilities group */}
       <div className="flex items-center gap-4">
+        {/* Hide Premium & About on small mobile layouts to save horizontal whitespace */}
         <Button
           variant="outline"
-          className="rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white"
+          className="hidden sm:flex rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
         >
-          <Star color="#EAB308" /> Go Premium
+          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" /> Go Premium
         </Button>
-        <Link href="/about" passHref>
+        
+        <Link href="/about" passHref className="hidden sm:inline-block">
           <Button
             variant="outline"
             className="rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white"
@@ -69,81 +70,38 @@ useEffect(() => {
             About Us
           </Button>
         </Link>
-        {
-          isUserAuthenticated ? (
         
+        {isUserAuthenticated ? (
           <Button
             variant="outline"
-            className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white"
+            className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
             onClick={handleLogout}
           >
             Log Out
           </Button>
+        ) : (
+          <Link href={`/signup?returnTo=${encodeURIComponent(pathname)}`}>
+            <Button
+              variant="outline"
+              className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
+            >
+              Login
+            </Button>
+          </Link>
+        )}
 
-          ):(
-
-                <Link href={`/signup?returnTo=${encodeURIComponent(pathname)}`} >
-          <Button
-            variant="outline"
-            className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white"
-          >
-            Login
-          </Button>
-        </Link>
-          )
-        }
-        {/* <Link href="http://localhost:5000/auth/google" passHref>
-          <Button
-            variant="outline"
-            className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white"
-          >
-            Login
-          </Button>
-        </Link> */}
-        <Avatar className="h-10 w-10">
-          <Image src={PamasLogo} alt="User" className="rounded-xl" />
-        </Avatar>
-        <Button
-          size="icon"
-          variant="ghost"
-          className="text-slate-300 hover:bg-white/5 hover:text-white"
-        >
-          <Sparkles className="h-5 w-5" />
-        </Button>
-      </div>
-    </header>
-  );
-}
-
-function AvatarWithFallback() {
-  return (
-    <header className="flex items-center justify-between px-5 py-5 bg-[#0f17233]">
-      {/* Other header content */}
-      <div className="flex items-center gap-4">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="text-slate-300 hover:bg-white/5 hover:text-white"
-        >
-          <Sparkles className="h-5 w-5" />
-        </Button>
-
+        {/* Dynamic User Avatar */}
         <Avatar className="h-10 w-10 border border-white/10">
-          <AvatarImage src="/avatar.png" alt="User" />
-          <AvatarFallback className="bg-cyan-500/20 text-cyan-300">
-            AI
+          {user?.picture ? (
+            <AvatarImage src={user.picture} alt={user.name || "User profile"} />
+          ) : (
+            <AvatarImage src="/avatar.png" alt="Fallback avatar" />
+          )}
+          <AvatarFallback className="bg-cyan-500/20 text-cyan-300 font-bold">
+            {user?.name ? user.name.slice(0, 2).toUpperCase() : "AI"}
           </AvatarFallback>
         </Avatar>
-      </div>
-    </header>
-  );
-}
 
-function AvatarWithFallbackAndImage() {
-  return (
-    <header className="flex items-center justify-between px-5 py-5 bg-[#0f172a]">
-      {/* Other header content */}
-      <div className="flex items-center gap-4">
         <Button
           size="icon"
           variant="ghost"
@@ -151,37 +109,6 @@ function AvatarWithFallbackAndImage() {
         >
           <Sparkles className="h-5 w-5" />
         </Button>
-
-        <Avatar className="h-10 w-10 border border-white/10">
-          <AvatarImage src="/avatar.png" alt="User" />
-          <AvatarFallback className="bg-cyan-500/20 text-cyan-300">
-            AI
-          </AvatarFallback>
-        </Avatar>
-      </div>
-    </header>
-  );
-}
-
-function AvatarWithImageOnly() {
-  return (
-    <header className="flex items-center justify-between px-5 py-5 bg-[#0f172a]">
-      {/* Other header content */}
-      <div className="flex items-center gap-4">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="text-slate-300 hover:bg-white/5 hover:text-white"
-        >
-          <Sparkles className="h-5 w-5" />
-        </Button>
-
-        <Avatar className="h-10 w-10 border border-white/10">
-          <AvatarImage src="/avatar.png" alt="User" />
-          <AvatarFallback className="bg-cyan-500/20 text-cyan-300">
-            AI
-          </AvatarFallback>
-        </Avatar>
       </div>
     </header>
   );

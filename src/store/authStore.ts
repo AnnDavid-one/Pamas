@@ -39,6 +39,7 @@ export const useAuthStore = create<AuthState>()(
         const isAuthPage = window.location.pathname === "/login" || window.location.pathname === "/signup";
         if (!get().token && !isAuthPage) {
           window.location.href = "/signup";
+          // console.log("switched to signup page demo")
         }
       },
 

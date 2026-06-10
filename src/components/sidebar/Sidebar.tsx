@@ -1,7 +1,8 @@
+// src/components/sidebar/Sidebar.tsx
 "use client";
 
 import { Button } from "../ui/button";
-import { ChevronRight, ChevronLeft, MoreVertical, Plus, Search, LogIn } from "lucide-react";
+import { ChevronRight, ChevronLeft, MoreVertical, Plus, Search, LogIn, X } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -12,36 +13,17 @@ import { useUserAuth } from "@/hooks/useUserAuth";
 const recentItems = ["Summarize lesson notes", "Explain thermodynamics simply", "Build exam revision roadmap"];
 const favoriteItems = ["PhD writing assistant", "Classroom lesson simplifier", "Research framework builder", "Exam prep content generator", "Teaching note summarizer"];
 
-export default function Sidebar() {
-  
-    // check if user is authenticated on component mount and update state accordingly
+interface SidebarProps {
+  isMobileOpen: boolean;
+  setIsMobileOpen: (open: boolean) => void;
+}
+
+export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps) {
   const isUserAuthenticated = useUserStore((state) => !!state.user);
-  // const = useAuthStore((state) => !!localStorage.getItem("token"));
-  
-
-
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(isUserAuthenticated);
 
-
-
-
-  // 1. Mobile Responsiveness: Automatically collapse on small screens
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsCollapsed(true);
-      } else {
-        setIsCollapsed(false);
-      }
-    };
-
-    handleResize(); // Run on mount
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // 2. Auth Check: Check for token (you can replace this with your actual auth logic)
+  // Sync token presence
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
@@ -51,60 +33,59 @@ export default function Sidebar() {
     setIsCollapsed(!isCollapsed);
   };
 
-
-//
-
-
-const initialize = useAuthStore((state) => state.initialize);
-  
-  // Run your OAuth URL token check right away
+  const initialize = useAuthStore((state) => state.initialize);
   useEffect(() => {
     initialize();
   }, [initialize]);
 
-  // Execute TanStack Query fetch and auto-sync to your userStore
   const { isLoading } = useUserAuth();
 
-  // if (isLoading) {
-  //   return <div className="flex h-screen items-center justify-center">Logging in...</div>;
-  // }
-
-  useEffect(() => {
-    {isLoading ? console.log("isLoading") : console.log("not loading");}
-
-  },[isLoading]);
-  
   return (
-    <aside
-      className={`transition-all duration-300 ${
-        isCollapsed ? "w-16" : "w-64"
-      } bg-[#161d27] border-r border-white/10 flex flex-col h-screen sticky top-0`}
-    >
+   <aside
+    className={`
+      fixed inset-y-0 left-0 z-50 w-64 -translate-x-full transition-transform duration-300 ease-in-out bg-[#161d27] border-r border-white/10 flex flex-col h-screen
+      ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+      
+      md:sticky md:top-0 md:translate-x-0 
+      ${isCollapsed ? "md:w-16" : "md:w-64"}
+    `}
+  >
       {/* Header Section */}
       <div className="flex items-center justify-between px-4 py-4">
-        {!isCollapsed && (
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-400/30 bg-[#0f172a]">
+        {/* Show items if sidebar is open on mobile OR expanded on desktop */}
+        {(!isCollapsed || isMobileOpen) && (
+          <div className="flex items-center gap-3 flex-1 mr-2">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cyan-400/30 bg-[#0f172a]">
               <Plus className="h-5 w-5 text-cyan-400" />
             </div>
-            <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#1d2633] px-3 py-2 text-sm text-slate-300">
-              <Search className="h-4 w-4" />
-              <span>Contents...</span>
+            <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#1d2633] px-3 py-2 text-sm text-slate-300 w-full min-w-0">
+              <Search className="h-4 w-4 shrink-0" />
+              <span className="truncate">Contents...</span>
             </div>
           </div>
         )}
+        
+        {/* Toggle / Close Control Button */}
         <Button
           size="icon"
           variant="ghost"
           onClick={toggleCollapse}
-          className={`text-slate-300 hover:bg-white/5 hover:text-white ${isCollapsed ? "mx-auto" : ""}`}
+          className={`text-slate-300 hover:bg-white/5 hover:text-white ${isCollapsed && !isMobileOpen ? "mx-auto" : ""}`}
         >
-          {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+          {/* Mobile Display: Clicking icon acts as a close window event */}
+          <span className="md:hidden" onClick={() => setIsMobileOpen(false)}>
+            <X className="h-5 w-5" />
+          </span>
+          
+          {/* Desktop Display: Standard collapsing arrow triggers */}
+          <span className="hidden md:block">
+            {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+          </span>
         </Button>
       </div>
 
       {/* Main Content Area */}
-      {!isCollapsed && (
+      {(!isCollapsed || isMobileOpen) && (
         <ScrollArea className="flex-1 px-4 pb-6">
           {isAuthenticated ? (
             <>
@@ -165,9 +146,9 @@ const initialize = useAuthStore((state) => state.initialize);
         </ScrollArea>
       )}
 
-      {/* Optional: Collapsed Sign In Icon */}
+      {/* Collapsed Sign In Icon (Desktop mode helper) */}
       {isCollapsed && !isAuthenticated && (
-        <div className="mt-auto mb-4 flex justify-center">
+        <div className="mt-auto mb-4 hidden md:flex justify-center">
           <Link href="/signup">
             <Button size="icon" variant="ghost" className="text-cyan-400 hover:bg-white/5">
               <LogIn className="h-5 w-5" />
