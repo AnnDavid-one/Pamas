@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function SignupPage() {
 
   const handleGoogleLogin = () => {
-    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL;
     window.location.href = `${apiBase}/auth/google`;
   };
 
