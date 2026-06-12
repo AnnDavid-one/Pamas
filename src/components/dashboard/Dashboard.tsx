@@ -21,7 +21,7 @@ export default function Dashboard() {
   } = useSummarizerStore();
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_28%),linear-gradient(180deg,#1a2230_0%,#111827_100%)]">
+    <div className="flex flex-1 flex-col overflow-hidden h-[80%] bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.12),_transparent_28%),linear-gradient(180deg,#1a2230_0%,#111827_100%)]">
       
       {/* Scrollable output area — grows to fill all available space */}
       <div className="flex-1 overflow-y-auto px-4 py-6">
@@ -43,7 +43,7 @@ export default function Dashboard() {
       </div>
 
       {/* Sticky input — always stays at the bottom */}
-      <div className="sticky bottom-0 w-full border-t border-white/10 bg-[#111827]/90 backdrop-blur-sm px-4 py-4">
+      <div className="sticky bottom-10 w-full border-t border-white/10 bg-[#111827]/90 backdrop-blur-sm px-4 py-4">
         <div className="mx-auto w-full max-w-3xl">
           <div className="flex relative rounded-2xl bg-[#0f172a] border border-white/10 px-4 py-2 items-end">
             <Textarea
