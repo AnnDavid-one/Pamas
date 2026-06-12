@@ -22,7 +22,7 @@ export default function SignupPage() {
         {/* Redirect to backend Google OAuth */}
         {/* <Link href={process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google'}> */}
           <Button
-            className="w-full bg-primary text-lg sm:text-xl hover:bg-primary/80 text-white font-bold py-5 px-4 rounded-xl mt-4"
+            className="w-full bg-primary text-sm sm:text-xl hover:bg-primary/80 text-white font-bold py-5 px-4 rounded-xl mt-4"
          onClick={handleGoogleLogin}
          >
             <Image src={GoogleLogo} alt="Google Logo" width={20} height={20} />
