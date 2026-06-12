@@ -5,11 +5,8 @@ import { useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import Header from "../components/header/Header";
 import Dashboard from "../components/dashboard/Dashboard";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
-
-
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -17,8 +14,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#111827] text-white flex flex-col w-full overflow-x-hidden">
       <div className="flex flex-1 relative items-stretch bg-[#111827] overflow-x-hidden">
-
-        <Sidebar isMobileOpen={isMobileOpen} setIsMobileOpen={setIsMobileOpen} />
+        <Sidebar
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
+        />
 
         {isMobileOpen && (
           <div
@@ -29,8 +28,7 @@ export default function Home() {
 
         <div className="flex-1 flex flex-col min-w-0 min-h-screen overflow-x-hidden">
           <Header onMenuClick={() => setIsMobileOpen(true)} />
-
-          <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <main className="flex-1 flex flex-col overflow-hidden">
             <Dashboard />
           </main>
 
