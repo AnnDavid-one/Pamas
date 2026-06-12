@@ -16,7 +16,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-foreground p-5">
-      <div className="flex flex-col w-full max-w-[80%] h-[60vh] bg-card absolute rounded-xl shadow-lg p-6 justify-between">
+      <div className="flex flex-col sm:w-[500px] max-w-[80%] h-[60vh] bg-card absolute rounded-xl shadow-lg p-6 justify-between">
         <h2 className="text-xl sm:text-2xl font-bold text-white  mb-3 sm:mb-6">Sign In to Pamas Ai</h2>
 
         {/* Redirect to backend Google OAuth */}
