@@ -23,12 +23,12 @@ export default function Header({ onMenuClick }: HeaderProps) {
   const { logout, user } = useUserStore(); // Destructured user data to render dynamic avatars
   const { logout: authLogout } = useAuthStore();
   const isUserAuthenticated = useUserStore((state) => !!state.user);
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout(); 
-    authLogout(); 
-    localStorage.removeItem("token"); 
+    logout();
+    authLogout();
+    localStorage.removeItem("token");
     router.push("/signup");
   };
 
@@ -37,12 +37,11 @@ export default function Header({ onMenuClick }: HeaderProps) {
   }, [isUserAuthenticated]);
 
   return (
-    <header className="flex items-center justify-between px-5 py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90% border-b border-white/5">
-      
+    <header className="flex items-center justify-between px-3 py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90% border-b border-white/5">
       {/* Left items control group */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         {/* Mobile Hamburger Trigger: Visible only on mobile, links to layout state */}
-        <button 
+        <button
           onClick={onMenuClick}
           className="text-slate-300 hover:text-white block md:hidden p-1.5 rounded-xl hover:bg-white/5 transition-colors"
         >
@@ -53,21 +52,22 @@ export default function Header({ onMenuClick }: HeaderProps) {
       </div>
 
       {/* Right navigation utilities group */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between gap-2 sm:gap-4">
         {/* Hide Premium & About on small mobile layouts to save horizontal whitespace */}
-      <Button
-  variant="outline"
-  className="flex md:hidden rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
->
+        <Button
+          variant="outline"
+          className="flex md:hidden rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center "
+        >
           <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" /> Pro
         </Button>
-         <Button
+        <Button
           variant="outline"
           className="hidden md:flex rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white items-center gap-2"
         >
-          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" />Go Premium 
+          <Star className="h-4 w-4" color="#EAB308" fill="#EAB308" />
+          Go Premium
         </Button>
-        
+
         <Link href="/about" passHref className="hidden sm:inline-block">
           <Button
             variant="outline"
@@ -76,7 +76,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
             About Us
           </Button>
         </Link>
-        
+
         {isUserAuthenticated ? (
           <Button
             variant="outline"
@@ -108,13 +108,13 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </AvatarFallback>
         </Avatar>
 
-        <Button
+        {/* <Button
           size="icon"
           variant="ghost"
           className="text-slate-300 hover:bg-white/5 hover:text-white"
         >
           <Sparkles className="h-5 w-5" />
-        </Button>
+        </Button> */}
       </div>
     </header>
   );

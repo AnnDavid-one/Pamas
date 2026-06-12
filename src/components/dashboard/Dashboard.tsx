@@ -26,7 +26,7 @@ export default function Dashboard() {
       <section className="mx-auto w-full max-w-5xl">
         <Card className="overflow-hidden rounded-l border border-white/10 bg-forground/95 shadow-2xl shadow-black/20">
           <div className="border-b border-white/10 px-6 py-2 sm:px-2">
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-xl font-semibold text-white sm:text-2xl">
               Pamas EduPilot
             </h2>
             <p className="hidden md:flex mt-1 text-sm text-slate-400">
@@ -36,8 +36,8 @@ export default function Dashboard() {
 
           <div className="flex flex-col">
             {/* AI Output */}
-            <div className="border-t border-white/10 p-6 lg:border-l lg:border-t-0 sm:px-1">
-              <div className="min-h-[20px] rounded-2xl border border-white/10 bg-[#0b1220] p-5">
+            <div className=" py-2 lg:border-l lg:border-t-0  sm:px-2">
+              <div className="min-h-[20px] rounded-lg border border-white/10 bg-[#0b1220] py-5 px-2 sm:px-0 ">
                 {summary ? (
                   <div className="markdown-content prose prose-invert max-w-none">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -76,7 +76,7 @@ export default function Dashboard() {
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="Write your content here..."
-                  className="flex md:hidden min-h-[20px] resize-none rounded-2xl border-0 bg-transparent px-2 py-4  text-white  placeholder:text-slate-500 shadow-none outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-xs"
+                  className="flex md:hidden min-h-[20px] resize-none rounded-2xl border-0 bg-transparent px-2 py-4  text-white  placeholder:text-slate-500 shadow-none outline-none ring-0 focus:border-0 focus:outline-none focus:ring-0 focus-visible:border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-4xs"
                 />
 
                 <Button
@@ -88,7 +88,7 @@ export default function Dashboard() {
                 </Button>
               </div>
               <div className="mt-5 flex justify-end">
-                <h2 className="text-primary">
+                <h2 className="text-primary text-sm sm:text-base">
                   {loading ? (
                     <>
                     <LoaderCircle className="mr-2 h-5 w-5 animate-spin" />
@@ -98,7 +98,7 @@ export default function Dashboard() {
                 </h2>
               </div>
 
-              <div className="rounded-2xl px-4 py-3 text-xl text-slate-400">
+              <div className="rounded-2xl px-4 py-3 text-l sm:text-xl text-slate-400">
                 Current mode:{" "}
                 <span className="font-medium text-slate-200">{mode}</span>
               </div>
