@@ -16,13 +16,13 @@ export default function SignupPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-foreground p-5">
-      <div className="flex flex-col w-full max-w-sm h-[60vh] bg-card absolute rounded-xl shadow-lg p-6 justify-between">
-        <h2 className="text-3xl font-bold text-white mb-6">Sign In to Pamas Ai</h2>
+      <div className="flex flex-col w-full max-w-[80%] h-[60vh] bg-card absolute rounded-xl shadow-lg p-6 justify-between">
+        <h2 className="text-xl sm:text-2xl font-bold text-white  mb-3 sm:mb-6">Sign In to Pamas Ai</h2>
 
         {/* Redirect to backend Google OAuth */}
         {/* <Link href={process.env.NEXT_PUBLIC_API_BASE_URL + '/auth/google'}> */}
           <Button
-            className="w-full bg-primary text-xl hover:bg-primary/80 text-white font-bold py-5 px-4 rounded-xl mt-4"
+            className="w-full bg-primary text-lg sm:text-xl hover:bg-primary/80 text-white font-bold py-5 px-4 rounded-xl mt-4"
          onClick={handleGoogleLogin}
          >
             <Image src={GoogleLogo} alt="Google Logo" width={20} height={20} />
