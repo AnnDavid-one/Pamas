@@ -37,7 +37,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
   }, [isUserAuthenticated]);
 
   return (
-    <header className="flex items-center justify-between px-3 py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90% ">
+    <header className="flex items-center justify-between px-3 py-2 sm:py-5 bg-gradient-to-r from-foreground from-40% to-[#0D4559] to-90% ">
       {/* Left items control group */}
       <div className="flex items-center gap-2">
         {/* Mobile Hamburger Trigger: Visible only on mobile, links to layout state */}

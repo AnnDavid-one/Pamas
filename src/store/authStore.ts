@@ -38,7 +38,7 @@ export const useAuthStore = create<AuthState>()(
         // Redirect unauthenticated traffic if they aren't on the login/signup page
         const isAuthPage = window.location.pathname === "/login" || window.location.pathname === "/signup";
         if (!get().token && !isAuthPage) {
-          window.location.href = "/signup";z
+          window.location.href = "/signup";
           // console.log("switched to signup page demo")
         }
       },
