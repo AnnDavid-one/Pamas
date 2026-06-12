@@ -43,7 +43,7 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
   return (
    <aside
     className={`
-      fixed inset-y-0 left-0 z-50 w-64 -translate-x-full transition-transform duration-300 ease-in-out bg-[#161d27] border-r border-white/10 flex flex-col h-screen
+      fixed inset-y-0 left-0 z-50 w-64 -translate-x-full transition-transform duration-300 ease-in-out bg-[#161d27] border-r border-white/10 flex flex-col h-[screen]
       ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
       
       md:sticky md:top-0 md:translate-x-0 
