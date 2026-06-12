@@ -80,7 +80,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
         {isUserAuthenticated ? (
           <Button
             variant="outline"
-            className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
+            className="hidden sm:flexrounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
             onClick={handleLogout}
           >
             Log Out
@@ -89,7 +89,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
           <Link href={`/signup?returnTo=${encodeURIComponent(pathname)}`}>
             <Button
               variant="outline"
-              className="rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
+              className="hidden sm:flex rounded-xl border-white/15 bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
             >
               Login
             </Button>

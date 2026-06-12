@@ -85,77 +85,72 @@ export default function Sidebar({ isMobileOpen, setIsMobileOpen }: SidebarProps)
       </div>
 
       {/* Main Content Area */}
+     {/* Bottom Footer: About + Auth buttons */}
       {(!isCollapsed || isMobileOpen) && (
-        <ScrollArea className="flex-1 px-4 pb-6">
-          {isAuthenticated ? (
-            <>
-              {/* Recents Section */}
-              <div className="mb-8">
-                <div className="mb-4 flex items-center justify-between px-2">
-                  <h3 className="text-xl font-semibold text-slate-100">Recents</h3>
-                  <button className="flex items-center gap-1 text-sm text-slate-400 hover:text-white">
-                    View all <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {recentItems.map((item, index) => (
-                    <button
-                      key={index}
-                      className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-[#202938] px-3 py-3 text-left text-slate-300 transition hover:border-cyan-400/30 hover:bg-[#283244] hover:text-white"
-                    >
-                      <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
-                      <span className="truncate text-sm">{item}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Favorites Section */}
-              <div>
-                <div className="mb-4 flex items-center justify-between px-2">
-                  <h3 className="text-xl font-semibold text-slate-100">Favorites</h3>
-                  <button className="flex items-center gap-1 text-sm text-slate-400 hover:text-white">
-                    View all <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="space-y-2">
-                  {favoriteItems.map((item, index) => (
-                    <button
-                      key={index}
-                      className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-slate-300 transition hover:bg-white/5 hover:text-white"
-                    >
-                      <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
-                      <span className="truncate text-sm">{item}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            /* Logged Out View */
-            <div className="flex flex-col items-center justify-center h-64 text-center space-y-4">
-              <p className="text-slate-400 text-sm">Sign in to see your recent activity and favorites.</p>
-              <Link href="/signup" className="w-full">
-                <Button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Sign In
-                </Button>
-              </Link>
-            </div>
-          )}
-        </ScrollArea>
-      )}
-
-      {/* Collapsed Sign In Icon (Desktop mode helper) */}
-      {isCollapsed && !isAuthenticated && (
-        <div className="mt-auto mb-4 hidden md:flex justify-center">
-          <Link href="/signup">
-            <Button size="icon" variant="ghost" className="text-cyan-400 hover:bg-white/5">
-              <LogIn className="h-5 w-5" />
+        <div className="mt-auto px-4 py-4 border-t border-white/10 flex flex-col gap-2">
+          <Link href="/about" className="w-full">
+            <Button
+              variant="outline"
+              className="w-full rounded-xl border-white/15 bg-[#1b2432] text-slate-100 hover:bg-[#243041] hover:text-white"
+            >
+              About Us
             </Button>
           </Link>
+
+          {isAuthenticated ? (
+            <Button
+              className="w-full rounded-xl bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium"
+              onClick={() => {
+                // reuse your logout logic here
+                localStorage.removeItem("token");
+                window.location.href = "/signup";
+              }}
+            >
+              Log Out
+            </Button>
+          ) : (
+            <Link href="/signup" className="w-full">
+              <Button className="w-full rounded-xl bg-primary text-foreground hover:bg-[#243041] hover:text-white font-medium gap-2">
+                <LogIn className="h-4 w-4" />
+                Login
+              </Button>
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* Collapsed icons (desktop only) */}
+      {isCollapsed && (
+        <div className="mt-auto mb-4 hidden md:flex flex-col items-center gap-3">
+          <Link href="/about">
+            <Button size="icon" variant="ghost" className="text-slate-300 hover:bg-white/5">
+              {/* Info icon for About */}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20A10 10 0 0012 2z" />
+              </svg>
+            </Button>
+          </Link>
+          {!isAuthenticated && (
+            <Link href="/signup">
+              <Button size="icon" variant="ghost" className="text-cyan-400 hover:bg-white/5">
+                <LogIn className="h-5 w-5" />
+              </Button>
+            </Link>
+          )}
         </div>
       )}
     </aside>
+
+    //   {/* Collapsed Sign In Icon (Desktop mode helper) */}
+    //   {isCollapsed && !isAuthenticated && (
+    //     <div className="mt-auto mb-4 hidden md:flex justify-center">
+    //       <Link href="/signup">
+    //         <Button size="icon" variant="ghost" className="text-cyan-400 hover:bg-white/5">
+    //           <LogIn className="h-5 w-5" />
+    //         </Button>
+    //       </Link>
+    //     </div>
+    //   )}
+    // </aside>
   );
 }
