@@ -117,34 +117,41 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-
 .markdown-content {
   color: #ffffff;
-  font-size: 1.2rem;
+  font-size: 0.875rem; /* mobile-first: ~14px */
   line-height: 1.7;
 }
 
+@media (min-width: 640px) {
+  .markdown-content {
+    font-size: 1.2rem; /* restore your original on sm+ */
+  }
+}
+
 .markdown-content h1 {
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   font-weight: 700;
   margin: 0 0 0.75rem;
   color: #f8f5f5;
 }
+@media (min-width: 640px) { .markdown-content h1 { font-size: 1.5rem; } }
 
 .markdown-content h2 {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   margin: 1rem 0 0.5rem;
   color: #fffbfb;
 }
+@media (min-width: 640px) { .markdown-content h2 { font-size: 1.25rem; } }
 
 .markdown-content h3 {
-  font-size: 1.1rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   margin: 0.85rem 0 0.4rem;
   color: #f6f1f1;
 }
-
+@media (min-width: 640px) { .markdown-content h3 { font-size: 1.1rem; } }
 .markdown-content p {
   margin-bottom: 0.9rem;
 }
@@ -165,7 +172,7 @@
   margin-bottom: 1rem;
 }
 textarea{
-  font-size: 18px;
+  font-size: 14px;
 }
 @layer base {
   * {
